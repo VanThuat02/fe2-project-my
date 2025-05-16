@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Văn Thuật - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            scroll-behavior: smooth;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 100px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .Home {
+            background: #dbeafe;
+        }
+
+        .home-contents {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .home-contents h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .blink-text {
+            animation: blink .6s linear forwards normal;
+        }
+
+        .home-contents p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .home-contents a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .home-contents a:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* About */
+        .abouts-contents {
+            display: flex;
+            gap: 40px;
+            max-width: 1000px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .avatar-me {
+            width: 200px;
+            height: 200px;
+            background: url('https://via.placeholder.com/200') center/cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-me {
+            max-width: 500px;
+        }
+
+        .about-me p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .about-me ul {
+            list-style: none;
+        }
+
+        .about-me li {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .about-me li strong {
+            color: #007bff;
+        }
+
+        /* Work */
+        .Work {
+            background: #dbeafe;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .work-content {
+            text-align: center;
+            width: 1000px;
+        }
+
+        .work-content h3 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .canvas {
+            width: 250px;
+            height: 200px;
+            perspective: 800px;
+            position: relative;
+            margin: 100px auto;
+            top: 10px;
+        }
+
+        .wheel-work-3d-wrapper {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            transform: rotateX(-25deg) rotateZ(-10deg);
+        }
+
+        .wheel {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            animation: wheel-3d 6s linear infinite;
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            /* background: red; */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        
+        }
+
+        .face:nth-child(1) {
+            background-image: url(img/mg-1.jpg);
+            transform: rotateY(0deg) translateZ(230px);
+        }
+
+        .face:nth-child(2) {
+            background-image: url(img/mg-2.jpg);
+            transform: rotateY(60deg) translateZ(230px);
+        }
+
+        .face:nth-child(3) {
+            background-image: url(img/mg-3.jpg);
+            transform: rotateY(120deg) translateZ(230px);
+        }
+
+        .face:nth-child(4) {
+            background-image: url(img/mg-4.jpg);
+            transform: rotateY(180deg) translateZ(230px);
+        }
+
+        .face:nth-child(5) {
+            background-image: url(img/mg-5.jpg);
+            transform: rotateY(240deg) translateZ(230px);
+        }
+
+        .face:nth-child(6) {
+            background-image: url(img/mg-6.jpg);
+            transform: rotateY(300deg) translateZ(230px);
+        }
+
+        /* Contact */
+        .contact-contents {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .contact-contents h3 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .contact-contents h5 {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .contact-contents p {
+            color: #333;
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .home-contents h1 {
+                font-size: 2rem;
+            }
+
+            .abouts-contents {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .avatar-me {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* animition */
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            5% {
+                opacity: .4;
+            }
+
+            10% {
+                opacity: 0;
+            }
+
+            15% {
+                opacity: .55;
+            }
+
+            20% {
+                opacity: .55;
+            }
+
+            25% {
+                opacity: 0;
+            }
+
+            30% {
+                opacity: .7;
+            }
+
+            40% {
+                opacity: .7;
+            }
+
+            45% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: .85;
+            }
+
+            65% {
+                opacity: .85;
+            }
+
+            70% {
+                opacity: 0;
+            }
+
+            75% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
+        }
+
+        @keyframes wheel-3d {
+            0% {
+                rotate: y 0deg;
+            }
+
+            100% {
+                rotate: y -360deg;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Nguyễn Văn Thuật</div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Trang chủ</a>
+                <a href="#about" class="nav-link">Giới thiệu</a>
+                <a href="#works" class="nav-link">Dự án</a>
+                <a href="#contact" class="nav-link">Liên hệ</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home -->
+    <section id="home" class="Home">
+        <div class="home-contents">
+            <h1 class="blink-text">Nguyễn Văn Thuật</h1>
+            <p class="blink-text">Tôi là sinh viên Trường Cao Đẳng Công Nghệ Thủ Đức</p>
+            <a href="#about">Tìm hiểu Thêm</a>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="Abouts">
+        <h3>Giới Thiệu</h3>
+        <div class="abouts-contents">
+            <div class="avatar-me"></div>
+            <div class="about-me">
+                <p>Tôi là sinh viên năm 3 ngành Công nghệ Thông tin tại Đại học Công nghệ, đam mê lập trình web và ứng
+                    dụng di động. Tôi đang tìm kiếm cơ hội thực tập để áp dụng kiến thức và phát triển kỹ năng thực tế.
+                </p>
+                <ul>
+                    <li><strong>Email:</strong> email@gmail.com</li>
+                    <li><strong>Phone:</strong> 098766312</li>
+                    <li><strong>Địa Chỉ:</strong> Thành Phố Hồ Chí Minh</li>
+                    <li><strong>GitHub:</strong> <a href="https://github.com/VanThuat02">github.com/VanThuat02</a></li>
+                    <li><strong>Kỹ Năng:</strong> HTML, CSS, JavaScript, Python, React, Git</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work -->
+    <section id="works" class="Work">
+        <div class="work-content">
+            <h3>Dự Án</h3>
+            <div class="canvas">
+                <div class="wheel-work-3d-wrapper">
+                    <div class="wheel">
+                        <div class="face">1</div>
+                        <div class="face">2</div>
+                        <div class="face">3</div>
+                        <div class="face">4</div>
+                        <div class="face">5</div>
+                        <div class="face">6</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="Contact">
+        <div class="contact-contents">
+            <h3>Liên hệ</h3>
+            <h5>Tôi rất mong trao đổi về cơ hội thực tập và các dự án thú vị. Hãy liên hệ với tôi!</h5>
+            <p><strong>Email:</strong> email@gmail.com</p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/VanThuat02">github.com/VanThuat02</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>Nguyễn Văn Thuật @ 2025</footer>
+
+    <script>
+        // Tắt khôi phục vị trí cuộn tự động của trình duyệt
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // Cuộn về đầu trang và xóa hash khi tải
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                window.location.hash = ''; // Xóa hash trong URL
+            }
+            window.scrollTo(0, 0); // Cuộn về đầu trang
+        });
+
+        // Smooth scroll cho nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Scroll animation cho sections
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+
+</html>
